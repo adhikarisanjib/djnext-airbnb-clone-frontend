@@ -1,19 +1,28 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 import MenuLink from "./MenuLink";
 
 import useLoginModal from "@/app/hooks/useLoginModal";
 import useSignupModal from "@/app/hooks/useSignupModal";
 
+import LogoutButton from "../LogoutButton";
 
-const UserNav = () => {
+
+interface UserNavProps {
+    userId?: string | null;
+}
+
+const UserNav: React.FC<UserNavProps> = ({userId}) => {
     const loginModal = useLoginModal();
     const signupModal = useSignupModal();
 
     const [isOpen, setIsOpen] = useState(false);
 
+    const router = useRouter();
+    
     return (
         <div className="p-2 relative inline-block border rounded-full">
             <button 
@@ -30,18 +39,51 @@ const UserNav = () => {
 
             {isOpen && (
                 <div className="w-[200px] absolute top-[50px] right-0 bg-white border rounded-xl shadow-md flex flex-col cursor-pointer">
-                    <MenuLink label="Login" onClick={() => {
-                            console.log("Menu Cliked")
-                            setIsOpen(false);
-                            loginModal.open();
-                        }
-                    } />
-                    <MenuLink label="Sign up" onClick={() => {
-                        console.log("Menu Cliked")
-                            setIsOpen(false);
-                            signupModal.open();
-                        }
-                    }  />
+
+                    {userId ? (
+                        <>
+                            <MenuLink label="Inbox" onClick={() => {
+                                    console.log("Menu Cliked")
+                                    setIsOpen(false);
+                                    router.push("/inbox");
+                                }
+                            } />
+                            <MenuLink label="My properties" onClick={() => {
+                                    console.log("Menu Cliked")
+                                    setIsOpen(false);
+                                    router.push("/myproperties");
+                                }
+                            } />
+                            <MenuLink label="My favourites" onClick={() => {
+                                    console.log("Menu Cliked")
+                                    setIsOpen(false);
+                                    router.push("/myfavourites");
+                                }
+                            } />
+                            <MenuLink label="My reservations" onClick={() => {
+                                    console.log("Menu Cliked")
+                                    setIsOpen(false);
+                                    router.push("/myreservations");
+                                }
+                            } />
+                            <LogoutButton />
+                        </>
+                    ) : (
+                        <>
+                            <MenuLink label="Login" onClick={() => {
+                                    console.log("Menu Cliked")
+                                    setIsOpen(false);
+                                    loginModal.open();
+                                }
+                            } />
+                            <MenuLink label="Sign up" onClick={() => {
+                                    console.log("Menu Cliked")
+                                    setIsOpen(false);
+                                    signupModal.open();
+                                }
+                            } />
+                        </>
+                    )}
                 </div>
             )}
         </div>

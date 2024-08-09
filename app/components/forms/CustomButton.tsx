@@ -8,7 +8,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({label, className, onClick}) 
   return (
     <div 
         onClick={onClick}
-        className={`py-4 bg-airbnb hover:bg-airbnb-dark text-white text-center rounded-xl transition cursor-pointer ${className}`}
+        className={`py-4 px-4 bg-airbnb hover:bg-airbnb-dark text-white text-center rounded-xl transition cursor-pointer ${className}`}
     >
         {label}
     </div>
